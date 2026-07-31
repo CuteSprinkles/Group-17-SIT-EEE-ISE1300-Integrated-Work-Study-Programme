@@ -110,7 +110,7 @@ When Barcode 2 is confirmed, the robot performs the following sequence:
 
 1. Stops and stores its current position and heading.
 2. Allows the LiDAR readings to settle.
-3. scans the left and right sides of the robot.
+3. Scans the left and right sides of the robot.
 4. Uses several LiDAR scans to vote for the most likely board side.
 5. Turns approximately 90° towards the selected side.
 6. Detects the front-board LiDAR cluster.
@@ -234,7 +234,7 @@ All motion commands pass through `publish_motion()`, which is the only method th
 ├── Group17Turtlebot3proj.py    # Main combined ROS 2 controller
 ├── README.md                   # Project documentation
 ├── error_sample.html           # Example generated fail-stop report
-├── Tweaking Parameters.pdf     # Parameters to Tweak
+└── Tweaking_Parameters.pdf     # Parameters to tweak
 
 ```
 ---
@@ -247,9 +247,7 @@ For a clean repository, rename the main controller to:
 Group17Turtlebot3proj.py
 ```
 
-Three terminal windows are recommended.
-
-**Terminal 2 is reserved for recovery teleoperation and does not need to run continuously.**
+Three terminal windows are recommended:
 
 ### Terminal 1 — TurtleBot3 Bring-Up
 
@@ -265,6 +263,8 @@ ros2 launch turtlebot3_bringup robot.launch.py
 ```
 
 ### Terminal 2 — Recovery Teleoperation
+
+**Terminal 2 is reserved for recovery teleoperation and does not need to run continuously.**
 
 Keep this terminal available. Start teleoperation only after the autonomous controller has entered a fail-stop and stopped publishing repeated zero-velocity commands.
 
@@ -570,7 +570,7 @@ Proudly developed by **EEE/ISE1300 Group 17** at the **Singapore Institute of Te
 * Heng Heng
 * World Cup Champ
 * Mamy Poko
-* Alocholic Guy
+* Alcoholic Guy
 
 This repository documents an academic robotics project involving autonomous navigation, sensor integration, finite-state-machine control, hardware actuation, repeated testing, troubleshooting, and safety recovery.
 
