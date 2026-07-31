@@ -233,7 +233,7 @@ All motion commands pass through `publish_motion()`, which is the only method th
 .
 ├── Group17Turtlebot3proj.py    # Main combined ROS 2 controller
 ├── README.md                   # Project documentation
-├── error_sample.html           # Example generated fail-stop report
+├── error_sample_report.html           # Example generated fail-stop report
 └── Tweaking_Parameters.pdf     # Parameters to tweak
 
 ```
@@ -380,7 +380,7 @@ The reset:
 
 The robot does **not** resume from the middle of an interrupted manoeuvre. Autonomous movement resumes only after the Pixy2 confirms the line for several consecutive frames.
 
-A sample generated report is included in [`error_sample.html`](error_sample.html).
+A sample generated report is included in [`error_sample_report.html`](error_sample_report.html).
 
 ---
 
