@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TurtleBot3 fail-stop report</title>
+<style>
+  body { background:#111418; color:#e6e6e6; margin:0; padding:28px;
+         font-family:"DejaVu Sans",Arial,sans-serif; line-height:1.55; }
+  .card { max-width:820px; margin:0 auto; background:#1b1f26;
+           border-radius:10px; overflow:hidden;
+           box-shadow:0 6px 24px rgba(0,0,0,.5); }
+  .top { background:#b3261e; color:#fff; padding:18px 26px; }
+  .top h1 { margin:0; font-size:21px; letter-spacing:.5px; }
+  .top p  { margin:6px 0 0; font-size:13px; opacity:.9; }
+  .body { padding:8px 26px 26px; }
+  h2 { color:#ffcf4d; font-size:14px; letter-spacing:1.5px;
+        text-transform:uppercase; margin:26px 0 10px;
+        border-bottom:1px solid #333a44; padding-bottom:6px; }
+  table { border-collapse:collapse; font-size:14px; }
+  td { padding:3px 16px 3px 0; vertical-align:top; }
+  td.k { color:#9aa4b2; white-space:nowrap; }
+  .tag { display:inline-block; background:#b3261e; color:#fff;
+          padding:2px 10px; border-radius:11px; font-size:13px;
+          font-weight:bold; }
+  .raw { background:#0e1116; border-left:3px solid #b3261e;
+          padding:10px 14px; font-family:"DejaVu Sans Mono",monospace;
+          font-size:13px; color:#ffb4ad; border-radius:0 5px 5px 0; }
+  ol, ul { margin:8px 0; padding-left:24px; }
+  li { margin:5px 0; }
+  code { background:#0e1116; padding:2px 7px; border-radius:4px;
+          font-family:"DejaVu Sans Mono",monospace; font-size:13px;
+          color:#7fd8ff; }
+  .cmd { display:block; background:#0e1116; color:#7fd8ff;
+          padding:13px 16px; border-radius:6px; margin:10px 0;
+          font-family:"DejaVu Sans Mono",monospace; font-size:13px;
+          word-break:break-all; border:1px solid #2b3542; }
+  .keys { font-family:"DejaVu Sans Mono",monospace; font-size:15px;
+           line-height:2; text-align:center; background:#0e1116;
+           padding:16px; border-radius:6px; margin:12px 0; }
+  .key { display:inline-block; background:#2b3542; color:#9dffb0;
+          border:1px solid #46525f; border-bottom-width:3px;
+          border-radius:5px; padding:3px 11px; margin:0 3px;
+          font-weight:bold; }
+  .warn { color:#ff8f85; font-weight:bold; }
+  .now li { list-style:none; }
+  .now b { color:#9dffb0; }
+  .foot { color:#7d8794; font-size:12px; margin-top:26px;
+           border-top:1px solid #333a44; padding-top:12px; }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="top">
+    <h1>FAIL-STOP &mdash; the robot has stopped itself</h1>
+    <p>Fault #6 &middot; 30 Jul 2026, 18:50:58</p>
+  </div>
+
+  <div class="body">
+
+    <h2>1. What went wrong</h2>
+    <table>
+      <tr><td class="k">Problem</td>
+          <td><span class="tag">UNEXPECTED CONDITION</span></td></tr>
+      <tr><td class="k">While it was</td>
+          <td>following the line</td></tr>
+      <tr><td class="k">Position</td>
+          <td>x=+1.204 m, y=-0.331 m, heading=+89.4 deg</td></tr>
+    </table>
+    <p>The robot hit a condition it is not willing to drive through. The full message below says exactly which one.</p>
+    <p class="raw">Something nobody has seen before happened.</p>
+
+    <h2>2. What to check first</h2>
+    <ol>
+      <li>Read the full message and find that text in the code.</li>
+      <li>Re-run with CONSOLE_STYLE=debug for the numbers behind it.</li>
+    </ol>
+
+    <h2>3. What the robot is doing right now</h2>
+    <ul class="now">
+      <li><b>STOP</b> &nbsp;wheels stopped, actuator signal released</li>
+      <li><b>LED</b> &nbsp;&nbsp;red LED flashing <b>fast</b>
+          (a slow flash is only a lost line, not this)</li>
+      <li><b>BEEP</b> &nbsp;repeating rise-and-fall siren</li>
+      <li><b>FREE</b> &nbsp;<code>/cmd_vel</code> released after
+          1.0&nbsp;s so you can drive it</li>
+    </ul>
+
+    <h2>4. How to recover (drive it yourself)</h2>
+    <ol>
+      <li>In <b>TERMINAL 2</b>, start keyboard control:
+        <span class="cmd">ros2 run turtlebot3_teleop teleop_keyboard</span>
+      </li>
+      <li>Drive it with the <b>W A S D X</b> keys.
+        <span class="warn">The arrow keys do NOT work.</span>
+        <div class="keys">
+          <span class="key">W</span> forward<br>
+          <span class="key">A</span>
+          <span class="key">S</span>
+          <span class="key">D</span>
+          &nbsp; A = turn left, D = turn right<br>
+          <span class="key">X</span> reverse<br>
+          <span class="key">S</span> or <span class="key">SPACE</span>
+          = STOP
+        </div>
+        Each press changes the target <b>speed</b> and the robot keeps
+        rolling &mdash; it does not stop when you let go. Tap
+        <span class="key">S</span> or <span class="key">SPACE</span>
+        to bring it to a halt.
+      </li>
+      <li>Put the robot back on the line, facing the way it was
+          travelling.</li>
+      <li>Press <code>Ctrl-C</code> in TERMINAL 2 to close teleop. If you
+          leave it running it will fight this program for control of
+          <code>/cmd_vel</code>.</li>
+      <li>In <b>TERMINAL 3</b>, run the reset command below.</li>
+    </ol>
+
+    <h2>5. Reset command</h2>
+    <span class="cmd">ros2 service call /turtlebot3_combined_controller/reset_fail_stop std_srvs/srv/Trigger &quot;{}&quot;</span>
+    <p>After the reset the robot waits until the Pixy sees the line for a
+       few frames, then carries on by itself.</p>
+
+    <p class="foot">
+      Written automatically by the controller. Set
+      <code>FAIL_STOP_HTML=0</code> to stop generating this file.
+    </p>
+
+  </div>
+</div>
+</body>
+</html>
